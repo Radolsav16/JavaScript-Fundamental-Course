@@ -15,6 +15,9 @@ function student(name,age,grade){
 
 }
 
+function lab(){
+    
+}
 student();
 
 function excellentGrade(grade){
