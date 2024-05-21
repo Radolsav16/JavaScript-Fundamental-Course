@@ -18,7 +18,10 @@ function solve(age) {
 
 solve();
 
+let a = 15 + 15;
+console.log(a);
 
+// Add somethhink 
 function rounding(num, precision) {
 
     if (precision > 15) {
