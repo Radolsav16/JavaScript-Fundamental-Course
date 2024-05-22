@@ -12,3 +12,19 @@ function echoPrint(data){
 
 }
 echoPrint(null);
+
+function concatnatingNames(firstName,lastName,joinSign){
+
+    let arrayName = [firstName,lastName];
+    let result = arrayName.join(joinSign);
+    
+    console.log(result);
+}
+
+concatnatingNames('John',
+
+'Smith'
+
+,
+
+'->')
