@@ -28,3 +28,15 @@ concatnatingNames('John',
 ,
 
 '->')
+
+function rigthPlace(string,char,string2){
+
+    let result = string.replace("_",char);
+    if(result === string2){
+        console.log('Mathed');
+    }else{
+        console.log('Not Matched');
+    }
+
+}
+rigthPlace();
