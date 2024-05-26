@@ -115,120 +115,186 @@ calculator(5,
     '+',
 
     10);
-function lowerOrUpper(char){
+function lowerOrUpper(char) {
 
-   char === char.toLowerCase() ?
-   console.log("lower-case"):
-   console.log("upper-case");
+    char === char.toLowerCase() ?
+        console.log("lower-case") :
+        console.log("upper-case");
 
 
-    
-}   
-lowerOrUpper('l'); 
 
-function reversedChar(charA,charB,charC){
+}
+lowerOrUpper('l');
+
+function reversedChar(charA, charB, charC) {
     console.log(`${charC} ${charB} ${charA}`);
 }
 reversedChar();
 
-function convertsMetrs(m){
+function convertsMetrs(m) {
     let kl = m / 1000;
     console.log(kl.toFixed(2));
 }
 convertsMetrs(80);
-function townInfo(town,population,area){
+function townInfo(town, population, area) {
     console.log(`Town ${town} has population of ${population} and area ${area} square km.`);
 }
 townInfo();
 
-function charToStr(char1,char2,char3){
+function charToStr(char1, char2, char3) {
     let str = `${char1}${char2}${char3}`;
     console.log(str);
 }
 
 charToStr();
 
-function sumOfDigits(num){
+function sumOfDigits(num) {
     let numAsStr = String(num);
     let sum = 0;
-    for(let i = 0;i<numAsStr.length;i++){
+    for (let i = 0; i < numAsStr.length; i++) {
         let singleNum = Number(numAsStr[i]);
-        sum+=singleNum;
+        sum += singleNum;
     }
 
     console.log(sum);
 }
 sumOfDigits();
 
-function primeChecker(num){
+function primeChecker(num) {
     let f = 2;
     let a = [];
-    while(num>1){
-        if(num % f === 0){
+    while (num > 1) {
+        if (num % f === 0) {
             a.push(f);
             num /= f;
-        }else{
-            f+=1;
+        } else {
+            f += 1;
         }
 
     }
-    if(a.length > 1){
+    if (a.length > 1) {
         console.log('false');
-    }else{
+    } else {
         console.log('true');
     }
 }
 console.log(primeChecker());
 
- // let isPrime = true;
-    // for(let i = 1;i<=10;i++){
-    //     if(num % i === 0){
-    //         isPrime = false;
-    //         break;
-    //     }
-    // }
-    // if(isPrime){
-    //     console.log('true');
-    // }else{
-    //     console.log('false');
-    // }
+// let isPrime = true;
+// for(let i = 1;i<=10;i++){
+//     if(num % i === 0){
+//         isPrime = false;
+//         break;
+//     }
+// }
+// if(isPrime){
+//     console.log('true');
+// }else{
+//     console.log('false');
+// }
 
-  function cone(radius,height){
+function cone(radius, height) {
     const pi = Math.PI;
-    const volume = pi*Math.pow(radius,2)*height/3;
-    const surfaceArea = pi * radius*(radius + Math.sqrt((radius * radius) + (height * height)));
+    const volume = pi * Math.pow(radius, 2) * height / 3;
+    const surfaceArea = pi * radius * (radius + Math.sqrt((radius * radius) + (height * height)));
     console.log(`volume = ${volume.toFixed(4)}`);
     console.log(`area = ${surfaceArea.toFixed(4)}`);
 
-  } 
-  cone(3,5); 
+}
+cone(3, 5);
 
-  function biggestOfThree(num1,num2,num3){
+function biggestOfThree(num1, num2, num3) {
     let max = Number.MIN_SAFE_INTEGER;
-    let arrayOFNums = [num1,num2,num3];
+    let arrayOFNums = [num1, num2, num3];
     for (let index = 0; index < arrayOFNums.length; index++) {
-        const num  = Number(arrayOFNums[index]);
-        if(num > max){
+        const num = Number(arrayOFNums[index]);
+        if (num > max) {
             max = num;
         }
     }
     console.log(max);
-   
-  }
-  biggestOfThree(-2,
+
+}
+biggestOfThree(-2,
 
     7,
-    
+
     3);
+function chessBoard(n) {
+    console.log(`<div class="chessboard">`);
+    for (let i = 1; i <= n; i++) {
+        if (i % 2 !== 0) {
+            console.log(`  <div>`);
+            for (let j = 0; j < n; j++) {
+                if (j % 2 === 0) {
+                    console.log(`    <span class="black"></span>`);
+                } else {
+                    console.log(`    <span class="white"></span>`);
+                }
+            }
+            console.log(`  </div>`);
+        } else {
+            console.log(`  <div>`);
+            for (let k = 0; k < n; k++) {
 
-    function binnaryToDecemical(binnaryNum){
-        let binnaryString = String(binnaryNum);
-        let decimicalNum = binnaryString.toString(2);
+                if (k % 2 !== 0) {
+                    console.log(`    <span class="black"></span>`);
+                } else {
+                    console.log(`    <span class="white"></span>`);
+                }
+
+            }
+            console.log(`  </div>`);
+
+        }
     }
-    binnaryToDecemical()
+    console.log(`</div>`);
 
-    if(true){
-        let y = 10;
+}
+chessBoard(3);
 
+function binnaryToDecemical(binnaryNum) {
+        
+    let decemical = 0;
+    let binaryIndex = binnaryNum.length - 1;
+    for (let i = 0; i < binnaryNum.length; i++) {
+        const num = Number(binnaryNum[i]);
+        decemical += num * Math.pow(2,binaryIndex);
+        binaryIndex--;
     }
-    console.log(y);
+
+    console.log(decemical);
+    
+    
+    
+}
+binnaryToDecemical('00001001');
+
+// function triangleIdea(sideOne,sideTwo,sideThree){
+//     let s = (sideOne + sideTwo + sideThree)/ 2;
+//     let area = Math.sqrt(s*(s - sideOne)*(s-sideTwo)*(s-sideThree));
+//     console.log(area);
+// }
+// triangleIdea(3,5.5,4);
+
+console.log(` `);
+console.log(` `);
+
+
+
+function makeHeartWithStarts(){
+    let n = 3;
+    console.log(`${` `.repeat(n - 2)}${`*`.repeat(n)}${` `.repeat(n)}${`*`.repeat(n)}`);
+    console.log(`${`*`.repeat(n + 2)}${` `.repeat(n - 2)}${`*`.repeat(n + 2)}`);
+
+    let freeSpaces = 0;
+    
+    for(let i = 11;i>=1;i-=2){
+        console.log(`${` `.repeat(freeSpaces)}${`*`.repeat(i)}${` `.repeat(freeSpaces)}`);
+        freeSpaces++;
+    }
+
+
+
+}
+makeHeartWithStarts();
