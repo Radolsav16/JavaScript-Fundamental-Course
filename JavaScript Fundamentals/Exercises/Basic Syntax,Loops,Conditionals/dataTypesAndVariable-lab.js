@@ -148,9 +148,9 @@ requiredReading(212,
     2);
 function centuriesToMinutes(centaries) {
     const years = centaries * 100;
-    const days = Math.round(years * (365.2422));
-    const hours = Math.round(days * 24);
-    const minutes = Math.round(hours * 60);
+    const days = Math.trunc(years * (365.2422));
+    const hours = days * 24;
+    const minutes = hours * 60;
 
     //output
     console.log(`${centaries} centuries = ${years} years = ${days} days = ${hours} hours = ${minutes} minutes`);
