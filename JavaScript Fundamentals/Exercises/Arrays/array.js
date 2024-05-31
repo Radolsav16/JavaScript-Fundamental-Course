@@ -111,8 +111,22 @@ function solve(arr){
         arr = newArr;
     }
 
-    console.log(arr[i]);
+    console.log(arr[0]);
 
 
 }
+
+
 solve([2,10,3]);
+
+const numsToZero = (number) => {
+    if(number === 0){
+        console.log("Reached base");
+    }else{
+        console.log(number);
+        numsToZero(number - 1);
+    }
+
+
+}
+numsToZero(10)
