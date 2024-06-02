@@ -130,17 +130,6 @@ function equalSum(arr) {
 
 equalSum([1]);
 
-
-function maxSequanceOfElements(arr) {
-
-    for (let i = 0; i < arr.length; i++) {
-        let currentNum = Number(arr[i]);
-
-    }
-
-}
-maxSequanceOfElements([2, 1, 1, 2, 3, 3, 2, 2, 2, 1]);
-
 function magicSum(arr, sum) {
 
     for (let i = 0; i < arr.length; i++) {
@@ -224,34 +213,136 @@ function dungeonestDark(arr) {
 // dungeonestDark(["rat 10|bat 20|potion 10|rat 10|chest 100|boss 70|chest 1000"]);
 dungeonestDark(["cat 10|potion 30|orc 10|chest 10|snake 25|chest 110"]);
 
-function ladyBug(input){
-  
-    let fieldSize = Number(input[0]);
-    let indexesLadyBugs = input[1];
-    let ladyBug = 'ladyBug';
-    let indexesArr = indexesLadyBugs.split(" ");
-    let mainArr = [];
-    for(let i = 0; i < indexesArr.length ; i++){
-        let index = Number(indexesArr[i]);
-        mainArr[index] = ladyBug;
+
+
+function solve(arr) {
+    let isEqual = false;
+    let specialIndex = 0;
+
+    if (arr.length === 1) {
+        console.log(0);
+        return;
     }
 
-    console.log(mainArr);
+    for (let i = 0; i < arr.length; i++) {
+        let currEl = arr[i];
+        let leftSum = 0;
+        let rightSum = 0;
+        for (let j = i + 1; j < arr.length; j++) {
+            let numsAfter = arr[j];
+            rightSum += numsAfter;
+        }
 
-   
+        for (let k = i - 1; k >= 0; k--) {
+            let numsBefore = arr[k];
+            leftSum += numsBefore;
+        }
 
-    
-    
-    
-    for(let i = 2; i < input.length ; i++){
-        let commands = input[i];
+        if (leftSum === rightSum) {
+            specialIndex = i;
+            isEqual = true;
+        }
     }
 
-    
+    if (isEqual) {
+        console.log(specialIndex);
+    } else {
+        console.log('no');
+    }
+}
+solve([10, 5, 5, 99,
+
+    3, 4, 2, 5, 1,
+
+    1, 4]);
+
+function maxSequanceOfElements(arr) {
+
+
+    let longestSequance = [];
+    let currentSequance = [arr[0]];
+
+    for (let i = 1; i < arr.length; i++) {
+        let currEl = arr[i];
+
+        if (currentSequance.includes(currEl)) {
+            currentSequance.push(currEl);
+        } else {
+            currentSequance = [currEl];
+        }
+
+        if (currentSequance.length > longestSequance.length) {
+            longestSequance = currentSequance;
+        }
+    }
+
+    console.log(longestSequance.join(" "));
 
 
 }
+maxSequanceOfElements([2, 1, 1, 2, 3, 3, 2, 2, 2, 1]);
 
-ladyBug([3,'0 1','0 right 1','2 right 1']);
+function ladyBug(input) {
+
+    let fieldSize = Number(input[0]);
+    let ladyBugindexes = input[1].split(" ").map(Number);
+    let field = [];
+
+    for (let i = 0; i < fieldSize; i++) {
+        if (ladyBugindexes.includes(i)) {
+            field[i] = 1;
+        } else {
+            field[i] = 0;
+        }
+    }
+
+    for (let j = 2; j < input.length; j++) {
+        let tokensArr = input[j].split(" ");
+        let ladyBugStartIndx = Number(tokensArr.shift());
+        let command = tokensArr.shift();
+        let moveLength = Number(tokensArr.pop());
+
+        if (!field[ladyBugStartIndx]) {
+            continue;
+        }
+
+        field[ladyBugStartIndx] = 0;
+
+        if (command === 'right') {
+            let newIndex = ladyBugStartIndx + moveLength;
+
+            if (newIndex < field.length) {
+                while (field[newIndex] === 1) {
+                    newIndex += moveLength;
+                }
+
+                if (newIndex < field.length) {
+                    field[newIndex] = 1;
+                }
+            }
+
+        } else if (command === 'left') {
+            let newIndx = ladyBugStartIndx - moveLength;
+
+            if (newIndx >= 0) {
+                while (field[newIndx] === 1) {
+                    newIndx -= moveLength;
+                }
+
+                if (newIndx >= 0) {
+                    field[newIndx] = 1;
+                }
+            }
+
+        }
+
+    }
+
+    console.log(field.join(" "));
+
+}
+
+ladyBug([3, '0 1', '0 right 1', '2 right 1']);
+
 
 
