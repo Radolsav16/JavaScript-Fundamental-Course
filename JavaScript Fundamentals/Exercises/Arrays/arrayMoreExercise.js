@@ -137,3 +137,82 @@ teamAccount(['CS WoW Diablo',
     'Expansion Civ-V',
 
     'Play!'])
+
+function magicMatrices(arr) {
+    let sumFirstColumn = 0;
+    let sumSecondColumn = 0;
+    let sumThirthColumn = 0;
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+            if (j === 0) {
+                sumFirstColumn += arr[i][j];
+            } else if (j === 1) {
+                sumSecondColumn += arr[i][j];
+            } else {
+                sumThirthColumn += arr[i][j];
+            }
+        }
+    }
+    let isTrue = sumFirstColumn === sumSecondColumn && sumFirstColumn === sumThirthColumn &&
+        sumSecondColumn === sumThirthColumn;
+    if (isTrue) {
+        console.log(true);
+    } else {
+        console.log(false);
+    }
+}
+// magicMatrices([[4, 5, 6], [6, 5, 4], [5, 5, 5]]);
+// magicMatrices([[11, 32, 45], [21, 0, 1], [21, 1, 1]]);
+magicMatrices([[1, 0, 0], [0, 0, 1], [0, 1, 0]])
+
+
+
+
+function spiralMatric(n1, n2) {
+
+    let value = 1;
+    let top = 0;
+    let bottom = n1 - 1;
+    let right = n1 - 1;
+    let left = 0;
+    let matrix = Array.from({ length: n1 }, () => Array(n1).fill(0));
+
+
+    while(value <= n1 * n2){
+        for(let i = left; i <= right ;i++){
+            matrix[top][i] = value++;
+        }
+        top++;
+
+        for(let j = top ; j <= bottom;j++){
+            matrix[j][right] = value++;
+
+        }
+        right--;
+
+        for(let k = right; k >= left ; k--){
+            matrix[bottom][k] = value++;
+        }
+        bottom--;
+
+        for(let s = bottom ; s >= top; s-- ){
+            matrix[s][left] = value++;
+        }
+        left++;
+
+       
+
+    }
+
+    console.log(matrix[0].join(" "));
+    console.log(matrix[1].join(" "));
+    console.log(matrix[2].join(" "));
+    console.log(matrix[3].join(" "));
+    console.log(matrix[4].join(" "));
+
+    
+
+    
+
+}
+spiralMatric(5,5);
