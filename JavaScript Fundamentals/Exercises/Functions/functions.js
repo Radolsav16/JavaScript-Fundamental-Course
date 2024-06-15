@@ -1,3 +1,29 @@
+class Figure {
+    constructor(x,y,z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.h = 50;
+    }
+
+    area(x,y){
+        return x * y;
+    }
+}
+
+let rectangle = new Figure(20,5,10);
+
+console.log(rectangle.area(20,50));
+
+
+
+
+
+
+
+
+
+
 function formatGrade(grade){
     if(grade < 3.00){
         console.log(`Fail (2)`);
