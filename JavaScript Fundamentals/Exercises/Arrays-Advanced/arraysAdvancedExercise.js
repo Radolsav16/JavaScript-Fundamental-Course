@@ -135,7 +135,6 @@ sortArrayByCriteria(["alpha", "beta", "gamma"]);
 sortArrayByCriteria(["Isacc", "Theodor", "Jack", "Harrison", "George"]);
 sortArrayByCriteria(["test", "Deny", "omen", "Default"]);
 
-
 function searchNums(arr1, arr2) {
   let numberTake = arr2.shift();
   let deleteCount = arr2.shift();
@@ -301,32 +300,20 @@ gladiator([
 
 // buildWall([21, 25, 28]);
 
-function bombNums(sequance,bombNumbers) {
-    let [specialNum,power] = bombNumbers;
-    
-    for(let i = 0; i < sequance.length;i++){
-        let nums = sequance[i];
-        if(nums === specialNum){
-            let specialNumIndx = sequance.indexOf(specialNum);
-            let startIndex = specialNumIndx - power;
-            let endIndex = specialNumIndx + power;
-            let newArr = sequance.slice(startIndex,);
-            let sum = 0;
-            for(let j = 0; j < sequance.length;j++){
-                let nums = sequance[j];
-                sum += nums;
-            }
-
-            console.log(sum);
-        }
+function bombNumbers(numbers, inputArr) {
+  const [specialNum, power] = inputArr;
+  for (let i = 0; i < numbers.length; i++) {
+    let num = numbers[i];
+    if (num === specialNum) {
+      numbers.splice(i - power, power * 2 + 1);
+      break;
     }
+  }
+  let sum = 0;
+  for (let j = 0; j < numbers.length; j++) {
+    let num = numbers[j];
+    sum += num;
+  }
+
+  console.log(sum);
 }
-// bombNums([1, 2, 2, 4, 2, 2,
-
-// 2, 9],
-
-// [4, 2]);
-
-bombNums([1, 7, 7, 1, 2, 3],
-
-    [7, 1])
