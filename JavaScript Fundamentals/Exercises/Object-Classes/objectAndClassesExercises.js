@@ -296,3 +296,75 @@ catalogue([
 
   "T-Shirt : 10",
 ]);
+
+function employess(array) {
+  class Emplayee {
+    constructor(name, number) {
+      this.name = name;
+      this.number = number;
+    }
+    selfTalk() {
+      console.log(`Name: ${this.name} -- Personal Number: ${this.number}`);
+    }
+  }
+  for (const names of array) {
+    const number = names.length;
+    const employee = new Emplayee(names, number);
+    employee.selfTalk();
+  }
+}
+employess([
+  "Silas Butler",
+
+  "Adnaan Buckley",
+
+  "Juan Peterson",
+
+  "Brendan Villarreal",
+]);
+
+function towns(array) {
+  class CreateCityObject {
+    constructor(city, longitude, latitude) {
+      this.city = city;
+      this.longitude = longitude;
+      this.latitude = latitude;
+    }
+  }
+
+  for (const town of array) {
+    const townArr = town.split(" | ");
+    let [city, latitude, longtitude] = townArr;
+    latitude = Number(latitude).toFixed(2).toString();
+    longtitude = Number(longtitude).toFixed(2).toString();
+    const obj = new CreateCityObject(city, latitude, longtitude);
+    console.log(obj);
+  }
+}
+
+towns(["Sofia | 42.696552 | 23.32601", "Beijing | 39.913818 | 116.363625"]);
+
+class Storage {
+  constructor(capacity) {
+    this.capacity = capacity;
+    this.storage = [];
+    this.totalCost = 0;
+  }
+
+  addProduct(productObj) {
+    this.storage.push(productObj);
+    this.capacity -= productObj.quantity;
+    const totalPrice = productObj.price * productObj.quantity;
+    this.totalCost += totalPrice;
+  }
+
+  getProducts() {
+    const result = [];
+
+    for (const objs of this.storage) {
+      result.push(JSON.stringify(objs));
+    }
+
+    return result.join("\n");
+  }
+}
