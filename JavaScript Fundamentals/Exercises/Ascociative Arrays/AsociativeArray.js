@@ -138,3 +138,39 @@ wordOccurency([
   "third",
   "sentence",
 ]);
+
+function makeDictionaryNew(array) {
+  const mainArr = [];
+  for (const objJson of array) {
+    const obj = JSON.parse(objJson);
+    const key = Object.keys(obj).shift();
+    const values = Object.values(obj).shift();
+    let isDuplicate = false;
+    for (let obj of mainArr) {
+      if (obj.term === key) {
+        obj.term = key;
+        obj.definition = values;
+        isDuplicate = true;
+        break;
+      }
+    }
+
+    if (!isDuplicate) {
+      mainArr.push({ term: key, definition: values });
+    }
+  }
+
+  mainArr.sort((a, b) => a.term.localeCompare(b.term));
+
+  mainArr.forEach((obj) => {
+    console.log(`Term: ${obj.term} => Definition: ${obj.definition}`);
+  });
+}
+makeDictionaryNew([
+  '{"Coffee":"A hot drink made from the roasted and ground seeds (coffee beans) of a tropical shrub."}',
+  '{"Bus":"A large motor vehicle carrying passengers by road,typically one serving the public on a fixed route and for a fare."}',
+  '{"Boiler":"A fuel-burning apparatus or container for heating water."}',
+  '{"Tape":"A narrow strip of material, typically used to hold or fasten something."}',
+  '{"Bus":"A large motor vehicle carrying passengers by road,typically one serving the public on a fixed route and for a fare."}',
+  '{"Microphone":"An instrument for converting sound waves into electrical energy variations hich may then be amplified transmitted, or recorded."}',
+]);
