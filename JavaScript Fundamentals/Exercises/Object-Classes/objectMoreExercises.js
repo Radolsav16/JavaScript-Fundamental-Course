@@ -125,38 +125,56 @@ fightShedule([
   ["Ready to fly"],
 ]);
 
+/*
+
+    Grade:[{name:Mark,avrageScore:50},{nameGosho}]
+
+*/
+
 function schoolRegister(array) {
-  const students = [];
-  for (const schoolInfo of array) {
-    const arrayInfo = schoolInfo.split(",");
-    const studentNameStr = arrayInfo.shift();
-    const studentGradeStr = arrayInfo.shift();
-    const studentScoreStr = arrayInfo.shift();
-    const name = studentNameStr.split(": ").pop();
-    const grade = Number(studentGradeStr.split(": ").pop());
-    const score = Number(studentScoreStr.split(": ").pop());
+  const grades = {};
+  for (const info of array) {
+    const infoArr = info.split(", ");
+    const studentNameStr = infoArr[0];
+    const gradeStr = infoArr[1];
+    const avarageScoreStr = infoArr[2];
 
-    students.push({ name, grade, score });
-  }
-  // delete students with lower grade
-  students.forEach((student, index) => {
-    if (student.score < 3) {
-      students.splice(index, 1);
+    const studentName = studentNameStr.split(": ").pop();
+    let grade = Number(gradeStr.split(": ").pop());
+    const avarageScore = Number(avarageScoreStr.split(": ").pop());
+    grade++;
+    if (avarageScore >= 3 && !grades.hasOwnProperty(grade)) {
+      grades[grade] = [{ name: studentName, grade, score: avarageScore }];
+    } else if (avarageScore >= 3 && grades.hasOwnProperty(grade)) {
+      grades[grade].push({ name: studentName, grade, score: avarageScore });
     }
-  });
-
-  students.forEach((student,index) => {
-    const listOfEqualGrade = [];
-    console.log(`${student.grade++} Grade`);
-    for(let i = index+1; i < students.length;i++){
-      if(students[i].grade === student.grade){
-        listOfEqualGrade.push(students[i].name);
-      }
   }
-    console.log(`List of students: ${listOfEqualGrade.join(",")}`);
-    console.log(`Average annual score from last year: ${student.score.toFixed(2)}`);
-    
-  });
+
+  const entries = Object.entries(grades);
+  entries.sort((a, b) => a[0] - b[0]);
+
+  for (let arrays of entries) {
+    const grade = arrays[0];
+    console.log(`${grade} Grade`);
+    const arr = arrays[1];
+    let allStudent = [];
+    let avarageScore = 0;
+    let people = 0;
+    for (let obj of arr) {
+      allStudent.push(obj.name);
+      avarageScore += obj.score;
+      people++;
+    }
+
+    avarageScore = avarageScore / people;
+    allStudent = allStudent.join(", ");
+
+    console.log(`List of students: ${allStudent}`);
+    console.log(
+      `Average annual score from last year: ${avarageScore.toFixed(2)}`
+    );
+    console.log(" ");
+  }
 }
 schoolRegister([
   "Student name: Mark, Grade: 8, Graduated with an average score: 4.75",
@@ -172,3 +190,82 @@ schoolRegister([
   "Student name: Peter, Grade: 11, Graduated with an average score: 4.88",
   "Student name: Gavin, Grade: 10, Graduated with an average score: 4.00",
 ]);
+
+function browserHistory(obj, stringArray) {
+  for (let commandStr of stringArray) {
+    const [command, site] = commandStr.split(" ");
+    if (command === "Open") {
+      obj["Open Tabs"].push(site);
+      obj["Browser Logs"].push(commandStr);
+    } else if (command === "Close") {
+      if (obj["Open Tabs"].includes(site)) {
+        let index = obj["Open Tabs"].indexOf(site);
+        obj["Open Tabs"].splice(index, 1);
+        obj["Recently Closed"].push(site);
+        obj["Browser Logs"].push(commandStr);
+      }
+    } else if (commandStr === "Clear History and Cache") {
+      obj["Open Tabs"] = [];
+      obj["Recently Closed"] = [];
+      obj["Browser Logs"] = [];
+    }
+  }
+
+  console.log(`${obj["Browser Name"]}`);
+  console.log(`Open Tabs: ${obj["Open Tabs"].join(", ")}`);
+  console.log(`Recently Closed: ${obj["Recently Closed"].join(", ")}`);
+  console.log(`Browser Logs: ${obj["Browser Logs"].join(", ")}`);
+}
+// browserHistory(
+//   {
+//     "Browser Name": "Google Chrome",
+//     "Open Tabs": ["Facebook", "YouTube", "Google Translate"],
+//     "Recently Closed": ["Yahoo", "Gmail"],
+//     "Browser Logs": [
+//       "Open YouTube",
+//       "Open Yahoo",
+//       "Open Google Translate",
+//       "Close Yahoo",
+//       "Open Gmail",
+//       "Close Gmail",
+//       "Open Facebook",
+//     ],
+//   },
+//   ["Close Facebook", "Open StackOverFlow", "Open Google"]
+// );
+
+browserHistory(
+  {
+    "Browser Name": "Mozilla Firefox",
+    "Open Tabs": ["YouTube"],
+    "Recently Closed": ["Gmail", "Dropbox"],
+    "Browser Logs": [
+      "Open Gmail",
+      "Close Gmail",
+      "Open Dropbox",
+      "Open YouTube",
+      "Close Dropbox",
+    ],
+  },
+  ["Open Wikipedia", "Clear History and Cache", "Open Twitter"]
+);
+
+function sequanceLL(input) {
+    input = input
+        .map(JSON.parse)
+        .map(el => el.sort((a, b) => b - a))
+        .map(JSON.stringify);
+    [...new Set(input)]
+        .map(JSON.parse)
+        .sort((a, b) => a.length - b.length)
+        .forEach(el => console.log(`[${el.join(', ')}]`));
+
+}
+
+sequanceLL(["[7.14, 7.180, 7.339, 80.099]",
+
+  "[7.339, 80.0990, 7.140000, 7.18]",
+  
+  "[7.339, 7.180, 7.14, 80.099]"])
+
+
