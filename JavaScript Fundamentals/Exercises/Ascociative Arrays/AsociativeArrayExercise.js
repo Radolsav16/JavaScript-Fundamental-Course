@@ -422,3 +422,192 @@ travelTime([
 
   "Bulgaria > Sofia > 200",
 ]);
+
+function cardGame(array) {
+  const players = {};
+  for (let info of array) {
+    const [name, cardsStr] = info.split(": ");
+    const cardsArr = cardsStr.split(", ");
+    if (players[name]) {
+      for (let card of cardsArr) {
+        players[name].add(card);
+      }
+    } else {
+      players[name] = new Set(cardsArr);
+    }
+  }
+
+  const entries = Object.entries(players);
+
+  for (let arr of entries) {
+    const name = arr.shift();
+    const setArray = arr.shift();
+    const normalArray = [...setArray];
+    let point = 0;
+    for (let el of normalArray) {
+      let a = undefined;
+      let b = undefined;
+      if (el.length === 3) {
+        a = el[0] + el[1];
+        b = el[2];
+      } else {
+        a = el[0];
+        b = el[1];
+      }
+
+      for (let k = 2; k <= 10; k++) {
+        if (a == k) {
+          a = Number(a);
+          break;
+        }
+      }
+
+      if (typeof a === "string") {
+        if (a === "J") {
+          a = 11;
+        } else if (a === "Q") {
+          a = 12;
+        } else if (a === "K") {
+          a = 13;
+        } else if (a === "A") {
+          a = 14;
+        } else if (a === "S") {
+          a = 4;
+        } else if (a === "H") {
+          a = 3;
+        } else if (a === "D") {
+          a = 2;
+        } else if (a === "C") {
+          a = 1;
+        }
+      }
+
+      if (b === "J") {
+        b = 11;
+      } else if (b === "Q") {
+        a = 12;
+      } else if (b === "K") {
+        b = 13;
+      } else if (b === "A") {
+        b = 14;
+      } else if (b === "S") {
+        b = 4;
+      } else if (b === "H") {
+        b = 3;
+      } else if (b === "D") {
+        b = 2;
+      } else if (b === "C") {
+        b = 1;
+      }
+
+      point += a * b;
+    }
+
+    console.log(`${name}: ${point}`);
+  }
+}
+cardGame([
+  "Peter: 2C, 4H, 9H, AS, QS",
+
+  "Tomas: 3H, 10S, JC, KD, 5S, 10S",
+
+  "Andrea: QH, QC, QS, QD",
+
+  "Tomas: 6H, 7S, KC, KD, 5S, 10C",
+
+  "Andrea: QH, QC, JS, JD, JC",
+
+  "Peter: JD, JD, JD, JD, JD, JD",
+]);
+
+function partyTime(array) {
+  let i = 0;
+  let command = array[i];
+  const listOfGuestSet = new Set();
+  const listOfNoGoing = { vip: undefined, normal: undefined };
+  while (command !== "PARTY") {
+    let quest = command;
+    listOfGuestSet.add(quest);
+
+    i++;
+    command = array[i];
+  }
+  const listOfGuest = [...listOfGuestSet];
+  for (let k = i + 1; k < array.length; k++) {
+    let guest = array[k];
+
+    if (listOfGuest.includes(guest)) {
+      let index = listOfGuest.indexOf(guest);
+      listOfGuest.splice(index, 1);
+    }
+  }
+
+  console.log(listOfGuest.length);
+
+  for (let guest of listOfGuest) {
+    let firstLetter = guest[0];
+    if (!isNaN(Number(firstLetter))) {
+      if (listOfNoGoing.hasOwnProperty("vip")) {
+        listOfNoGoing.vip = [guest];
+      } else {
+        listOfNoGoing.vip.push(guest);
+      }
+    } else {
+      if (listOfNoGoing.hasOwnProperty("normal")) {
+        listOfNoGoing.normal = [guest];
+      } else {
+        listOfNoGoing.normal.push(guest);
+      }
+    }
+  }
+
+  const entries = Object.entries(listOfNoGoing);
+  const allNoEntruPeople = 0;
+  for (let arr of entries) {
+    if (arr[0] === "vip") {
+      for (let items of arr[1]) {
+        console.log(items);
+      }
+    }
+  }
+
+  for (let arr of entries) {
+    if (arr[0] === "normal") {
+      for (let items of arr[1]) {
+        console.log(items);
+      }
+    }
+  }
+}
+
+partyTime([
+  "m8rfQBvl",
+  "fc1oZCE0",
+  "UgffRkOn",
+  "7ugX7bm0",
+  "9CQBGUeJ",
+  "2FQZT3uC",
+  "dziNz78I",
+  "mdSGyQCJ",
+  "LjcVpmDL",
+  "fPXNHpm1",
+  "HTTbwRmM",
+  "B5yTkMQi",
+  "8N0FThqG",
+  "xys2FYzn",
+  "MDzcM9ZK",
+  "PARTY",
+  "2FQZT3uC",
+  "dziNz78I",
+  "mdSGyQCJ",
+  "LjcVpmDL",
+  "fPXNHpm1",
+  "HTTbwRmM",
+  "B5yTkMQi",
+  "8N0FThqG",
+  "m8rfQBvl",
+  "fc1oZCE0",
+  "UgffRkOn",
+  "7ugX7bm0",
+  "9CQBGUeJ",
+]);
