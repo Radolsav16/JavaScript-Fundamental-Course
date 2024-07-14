@@ -97,82 +97,105 @@ function replaceRepeatingChars(string) {
 }
 replaceRepeatingChars("aaaaabbbbbcdddeeeedssaa");
 
-function pascalCaseSpliter(text) {
-  const resultText = [];
-  for (let i = 0; i < text.length; i++) {
-    const chars = text[i];
-    const changedChar = chars.toLowerCase();
-    let word = "";
-    if (chars !== changedChar) {
-      word += chars;
-      for (let k = i + 1; k < text.length; k++) {
-        const charsAfter = text[k];
-        const changedChar2 = charsAfter.toLowerCase();
-        if (charsAfter === changedChar2) {
-          word += charsAfter;
-          if(k === text.length - 1){
-            resultText.push(word);
-          }
-        } else {
-          i = k - 1;
-          resultText.push(word);
-          break;
-        }
-      }
+function cutAndReverse(str) {
+  const halfIndex = Math.floor(str.length / 2);
+  const firstHaldArr = str.substring(0, halfIndex).split("").reverse().join("");
+  const secondHalfArr = str.substring(halfIndex).split("").reverse().join("");
+  console.log(firstHaldArr);
+  console.log(secondHalfArr);
+}
+cutAndReverse("tluciffiDsIsihTgnizamAoSsIsihT");
+
+function pascalCaseSplitter(text) {
+  const pattern = /[A-Z][a-z]*/g;
+  const matchWords = text.matchAll(pattern);
+  const resukt = [];
+
+  for (let arraysObj of matchWords) {
+    resukt.push(arraysObj[0]);
+  }
+
+  console.log(resukt.join(", "));
+}
+pascalCaseSplitter("SplitMeIfYouCanHaHaYouCantOrYouCan");
+
+function hardWork(arr) {
+  let text = arr[0];
+  const arrOfWords = arr[1];
+  const arrOfText = text.split(/[.?:,!]? /);
+
+  const holesArr = arrOfText.filter((word) => word.includes("_"));
+
+  for (const hole of holesArr) {
+    let word = arrOfWords.find((word) => word.length === hole.length);
+    text = text.replace(hole, word);
+  }
+
+  console.log(text);
+}
+hardWork([
+  "Hi, grandma! I'm so ____ to write to you. ______ the winter vacation, so _______ things happened. My dad bought me a sled. Mom started a new job as a __________. My brother's ankle is ________, and now it bothers me even more.Every night Mom cooks ___ on your recipe because it is the most delicious. I hope this year Santa will _____ me a robot.",
+
+  ["pie", "bring", "glad", "During", "amazing", "pharmacist", "sprained"],
+]);
+
+function passwordGenerator(arr) {
+  let [str1, str2, specailWord] = arr;
+  let password = str1 + str2;
+  const vowels = ["a", "e", "o", "u", "i"];
+
+  let indexOfSpecialWord = 0;
+
+  for (let chars of password) {
+    if (vowels.includes(chars)) {
+      let replaceWord = specailWord[indexOfSpecialWord];
+      password = password.replace(chars, replaceWord.toUpperCase());
+      indexOfSpecialWord++;
+    }
+
+    if (indexOfSpecialWord === specailWord.length) {
+      indexOfSpecialWord = 0;
     }
   }
-  console.log(resultText.join(", "));
+
+  password = password.split("").reverse().join("");
+  console.log(`Your generated password is ${password}`);
 }
-pascalCaseSpliter("SplitMeIfYouCanHaHaYouCantOrYouCan");
+passwordGenerator(["ilovepizza", "ihatevegatbles", "orange"]);
 
-
-function cutAndReverse(str){
-    const halfIndex = Math.floor(str.length / 2);
-    const firstHaldArr = str.substring(0,halfIndex).split("").reverse().join("");
-    const secondHalfArr = str.substring(halfIndex).split("").reverse().join("");
-    console.log(firstHaldArr)
-    console.log(secondHalfArr);
-}  
-cutAndReverse('tluciffiDsIsihTgnizamAoSsIsihT');
-
-
-function hardWork(array){
-    let  text = array.shift();
-    const arrayOfWord = array.shift();
-   
-    for(let word of arrayOfWord){
-        let hole = '_'.repeat(word.length);
-       
-        
+function letterChange(str) {
+  const array = str.split(" ");
+  let sum = 0;
+  let alphabetLowerCase = "abcdefghijklmnopqrstuvwxyz".split("");
+  let alphabetUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  let totalSums = 0;
+  for (let str of array) {
+    let fisrtChar = str[0];
+    let lastChar = str[str.length - 1];
+    let num = "";
+    for (let i = 1; i <= str.length - 2; i++) {
+      let nums = str[i];
+      num += nums;
     }
-
-    console.log(text);
-
-   
-}
-hardWork(['Hi, grandma! I\'m so ____ to write to you. ______ the winter vacation, so_______ things happened. My dad bought me a sled. Mom started a new job as a__________. My brother\'s ankle is ________, and now it bothers me even more.Every night Mom cooks ___ on your recipe because it is the most delicious. I hope this year Santa will _____ me a robot.',
-
-['pie', 'bring', 'glad', 'During', 'amazing', 'pharmacist', 'sprained']]);
-
-function password(array){
-    const vowes = ['a','o','y','i','e'];
-
-        
-
-}
-password([
-
-    'ilovepizza',
-    
-    'ihatevegetables',
-    
-    'orange'
-    
-    ])
-
-
-function solve(){
-    function solve2(){
-        console.log('pfhdjhgj');
+    num = Number(num);
+    const isUpper = /[A-Z]/;
+    if (isUpper.test(fisrtChar)) {
+      let position = alphabetUpperCase.indexOf(fisrtChar) + 1;
+      num /= position;
+    } else {
+      let position = alphabetLowerCase.indexOf(fisrtChar) + 1;
+      num *= position;
     }
-}    
+    if (isUpper.test(lastChar)) {
+      let position = alphabetUpperCase.indexOf(lastChar) + 1;
+      num -= position;
+    } else {
+      let position = alphabetLowerCase.indexOf(lastChar) + 1;
+      num += position;
+    }
+    totalSums += num;
+  }
+  console.log(totalSums.toFixed(2));
+}
+// letterChange("A12b s17G");
+letterChange("P34562Z q2576f H456z");
