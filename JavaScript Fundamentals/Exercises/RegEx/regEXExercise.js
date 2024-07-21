@@ -167,3 +167,110 @@ softuniBarIncome([
   "%Maria%<Cola>|1|2.4$",
   "end of shift",
 ]);
+
+function starEnigma(input) {
+  const n = Number(input.shift());
+  const fisrtPattern = /[s, t, a, r]/gi;
+  const attackedPlanets = [];
+  const destroyedPlanets = [];
+
+  for (let i = 0; i < n; i++) {
+    let message = input[i];
+    let count = 0;
+    let newMessage = "";
+    let matchedChar = message.match(fisrtPattern);
+    let key = matchedChar.length;
+    for (const char of message) {
+      let currcharCode = char.charCodeAt(0);
+      let newChar = String.fromCharCode(currcharCode - key);
+      newMessage += newChar;
+    }
+    let indexOfclomba = newMessage.indexOf("@");
+    let indexOfTwoPoints = newMessage.indexOf(":");
+    let indx1 = newMessage.indexOf("!");
+    let indx2 = newMessage.lastIndexOf("!");
+    let indx3 = newMessage.indexOf(">");
+    if (
+      indx3 === -1 ||
+      indx2 === -1 ||
+      indx3 === -1 ||
+      indexOfclomba === -1 ||
+      indexOfTwoPoints === -1
+    ) {
+      continue;
+    }
+    const patternForName = /[A-Za-z]/;
+    let name = "";
+    // construct name
+    for (let k = indexOfclomba + 1; k < newMessage.length; k++) {
+      let char = newMessage[k];
+      if (patternForName.test(char)) {
+        name += char;
+      } else {
+        break;
+      }
+    }
+    const populationPattern = /[0-9]/;
+    let population = "";
+    // construct population integer
+    for (let j = indexOfTwoPoints + 1; j < newMessage.length; j++) {
+      const char = newMessage[j];
+      if (populationPattern.test(char)) {
+        population += char;
+      } else {
+        break;
+      }
+    }
+    population = Number(population);
+    let attack = "";
+    //construct attack type
+    for (let l = indx1 + 1; l < indx2; l++) {
+      const char = newMessage[l];
+      attack = char;
+    }
+    let soldiercount = "";
+    // construct soldeir count
+    for (let p = indx3 + 1; p < newMessage.length; p++) {
+      const char = newMessage[p];
+      if (populationPattern.test(char)) {
+        soldiercount += char;
+      } else {
+        break;
+      }
+    }
+    soldiercount = Number(soldiercount);
+
+    let isInvalid = isNaN(soldiercount) || isNaN(population);
+
+    if (!isInvalid) {
+      if (attack === "A") {
+        attackedPlanets.push(name);
+      } else if (attack === "D") {
+        destroyedPlanets.push(name);
+      }
+    }
+  }
+
+  let sortedPlanetsAttacked = attackedPlanets.sort((a, b) =>
+    a.localeCompare(b)
+  );
+  let sortedPlanetsDestroyed = destroyedPlanets.sort((a, b) =>
+    a.localeCompare(b)
+  );
+  console.log(`Attacked planets: ${sortedPlanetsAttacked.length}`);
+  for (const el of sortedPlanetsAttacked) {
+    console.log(`-> ${el}`);
+  }
+
+  console.log(`Destroyed planets: ${sortedPlanetsDestroyed.length}`);
+  for (const el of sortedPlanetsDestroyed) {
+    console.log(`-> ${el}`);
+  }
+}
+starEnigma(["2", "STCDoghudd4=63333$D$0A53333", "EHfsytsnhf?8555&I&2C9555SR"]);
+starEnigma([
+  "3",
+  "tt(''DGsvywgerx>6444444444%H%1B9444",
+  "GQhrr|A977777(H(TTTT",
+  "EHfsytsnhf?8555&I&2C9555SR",
+]);
