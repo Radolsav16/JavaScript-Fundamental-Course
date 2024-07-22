@@ -155,3 +155,51 @@ starEnigma([
   "GQhrr|A977777(H(TTTT",
   "EHfsytsnhf?8555&I&2C9555SR",
 ]);
+
+function netherRealms(inputStr) {
+  const input = inputStr.split(", ");
+  const battleDemonBook = [];
+  const excluddingCharacters = /[^\d\+\-\*/.]/g;
+  const numberPattern = /[\-\+]*\d+\.\d+|\d/g;
+
+  for (let demons of input) {
+    let demonHealth = 0;
+    let matchesForHealth = demons.matchAll(excluddingCharacters);
+    for (let arr of matchesForHealth) {
+      let char = arr[0];
+      let asciCode = char.charCodeAt(0);
+      demonHealth += asciCode;
+    }
+    let baseDamage = 0;
+
+    let matchedNums = demons.matchAll(numberPattern);
+    for (let matches of matchedNums) {
+      let nums = Number(matches[0]);
+      baseDamage += nums;
+    }
+
+    for (let chars of demons) {
+      if (chars === "*") {
+        baseDamage *= 2;
+      } else if (chars === "/") {
+        baseDamage /= 2;
+      }
+    }
+
+    battleDemonBook.push({ name: demons, baseDamage, demonHealth });
+  }
+
+  let sortedArr = battleDemonBook.sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const obj of sortedArr) {
+    console.log(
+      `${obj.name} - ${obj.demonHealth} health, ${obj.baseDamage.toFixed(
+        2
+      )} damage`
+    );
+  }
+}
+
+// netherRealms('M3ph-0.5s-0.5t0.0**');
+// netherRealms('M3ph1st0**, Azazel');
+netherRealms("Gos/ho");
