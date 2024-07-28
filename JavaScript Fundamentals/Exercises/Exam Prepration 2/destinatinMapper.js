@@ -1,18 +1,17 @@
-function solve(str) {
-  const pattern = /([/=])(?<country>[A-Z][A-Za-z]{2,})\1/g;
-  const matchedLocations = str.matchAll(pattern);
-  let travelPoints = 0;
-  const destinations = [];
-  for (const matches of matchedLocations) {
-    let obj = matches.groups;
-    let { country } = obj;
-    if(!destinations.includes(country)){
-        destinations.push(country);
-        travelPoints += country.length;
-    }
+function solve(input) {
+  let str = input.shift();
+  let locationPattern = /(=|\/)(?<location>[A-Z][A-Za-z]{2,})\1/g;
+  let travelPoint = 0;
+  let iterator = str.matchAll(locationPattern);
+  const destinationsArr = [];
+  for(let destinations of iterator){
+    let location = destinations.groups.location;
+    destinationsArr.push(location);
+    let length = location.length;
+    travelPoint += length;
   }
-
-  console.log(`Destinations: ${destinations.join(", ")}`);
-  console.log(`Travel Points: ${travelPoints}`);
+  console.log(`Destinations: ${destinationsArr.join(", ")}`);
+  console.log(`Travel Points: ${travelPoint}`);
+  
 }
-solve("=Hawai=/Cyprus/=Invalid/invalid==i5valid=/I5valid/=i=");
+solve(["=Hawai=/Cyprus/=Invalid/invalid==i5valid=/I5valid/=i="]);

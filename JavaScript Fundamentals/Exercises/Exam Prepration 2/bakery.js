@@ -1,58 +1,52 @@
 function bakery(input) {
-  let lines = input.shift();
-  const bakeryShop = {};
-  let allGoods = 0;
-
-  while (lines !== "Complete") {
-    if (lines.includes("Receive")) {
-      let [commnd, quantity, food] = lines.split(" ");
+  let command = input.shift();
+  const foods = {};
+  let soldFoodQuantity = 0;
+  while (command !== "Complete") {
+    if (command.includes("Receive")) {
+      let [info, quantity, food] = command.split(" ");
       quantity = Number(quantity);
-
-      if (quantity >= 0) {
-        if (food in bakeryShop) {
-          bakeryShop[food] += quantity;
+      if (quantity > 0) {
+        if (food in foods) {
+          foods[food] += quantity;
         } else {
-          bakeryShop[food] = quantity;
+          foods[food] = quantity;
         }
       }
-    } else if (lines.includes("Sell")) {
-      let [command, quantity, food] = lines.split(" ");
+    } else if (command.includes("Sell")) {
+      let [info, quantity, food] = command.split(" ");
       quantity = Number(quantity);
-
-      if (!bakeryShop.hasOwnProperty(food)) {
-        console.log(`You do not have any ${food}.`);
-      } else {
-        if (quantity > bakeryShop[food]) {
+      if (food in foods) {
+        if (foods[food] < quantity) {
+          delete foods[food];
+          soldFoodQuantity += quantity;
           console.log(
-            `There aren't enough ${food}. You sold the last ${bakeryShop[food]} of them.`
+            `There aren't enough ${food}. You sold the last ${foods[food]} of them.`
           );
-          soldProducts.push(food);
-          allGoods += quantity;
-          delete bakeryShop[food];
         } else {
-          bakeryShop[food] -= quantity;
-          allGoods += quantity;
-          console.log(`You sold ${quantity} ${food}.`);
-          if (bakeryShop[food] <= 0) {
-            delete bakeryShop[food];
+          foods[food] -= quantity;
+          if (foods[food] <= 0) {
+            delete foods[food];
           }
+          soldFoodQuantity += quantity;
+          console.log(`You sold ${quantity} ${food}.`);
         }
+      } else {
+        console.log(`You do not have any ${food}.`);
       }
     }
-
-    lines = input.shift();
+    command = input.shift();
   }
 
-  for (let keys in bakeryShop) {
-    console.log(`${keys}: ${bakeryShop[keys]}`);
+  for (let food in foods) {
+    console.log(`${food}: ${foods[food]}`);
   }
-
-  console.log(`All sold: ${allGoods} goods`);
+  console.log(`All sold: ${soldFoodQuantity} goods`);
 }
 bakery([
-  "Receive 105 cookies",
-  "Receive 10 donuts",
-  "Sell 10 donuts",
-  "Sell 1 bread",
+  "Receive 10 muffins",
+  "Receive 23 bagels",
+  "Sell 5 muffins",
+  "Sell 10 bagels",
   "Complete",
 ]);
