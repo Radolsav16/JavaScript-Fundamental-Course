@@ -8,20 +8,36 @@ function solve(input){
         }
         Heal(hp){
            if( this.hp + hp > 100){
+            hp = 100 - this.hp;
             this.hp = 100;
            } 
-           
-           console.log(`{hero name} healed for {amount recovered} HP!`);
+           console.log(`${this.name} healed for ${hp} HP!`);
         }
         TakeDamage(killer,hp){
-
+            this.hp -= hp;
+            if(this.hp > 0){
+                console.log(`${this.name} was hit for ${hp} HP by ${killer} and now has ${this.hp} HP left!`);
+            }else{
+                console.log(`${this.name} has been killed by ${killer}!`);
+            }
         }
-
         Recharge(mp){
+            if( this.mp + mp > 200){
+                mp = 200 - this.mp;
+                this.mp = 200;
+            } 
 
+            
+
+
+            console.log(`${this.name} recharged for ${mp} MP!`);
         }
         CastSpell(spell,mp){
-
+            if(this.mp >= mp){
+            console.log(`${this.name} has successfully cast ${spell} and now has ${this.mp} MP!`);
+            }else{
+                console.log(`${this.name} does not have enough MP to cast ${spell}!`);
+            }
         }
     }
     let n = Number(input.shift());
@@ -43,21 +59,32 @@ function solve(input){
         if(cmd === 'Heal'){
             let hp = Number(infoArr.shift());
             let obj = listOfHeroes.find((obj)=>obj.name === name);
-            obj.Heal(hp);
+            let index = listOfHeroes.indexOf(obj);
+            listOfHeroes.splice(index,1);
+             obj.Heal(hp);
         } else if(cmd === 'Recharge'){
             let mp = Number(infoArr.shift());
             let obj = listOfHeroes.find((obj)=>obj.name === name);
+            let index = listOfHeroes.indexOf(obj);
+            listOfHeroes.splice(index,1);
             obj.Recharge(mp);
+            listOfHeroes.push(obj)
         }else if(cmd === 'TakeDamage'){
-            let killer = infoArr.shift();
+            let killer = infoArr.pop();
             let hp = Number(infoArr.shift());
             let obj = listOfHeroes.find((obj)=>obj.name === name);
+            let index = listOfHeroes.indexOf(obj);
+            listOfHeroes.splice(index,1);
             obj.TakeDamage(killer,hp);
+            listOfHeroes.push(obj)
         }else if(cmd === 'CastSpell'){
-            let spell = infoArr.shift();
+            let spell = infoArr.pop();
             let mp = Number(infoArr.shift());
             let obj = listOfHeroes.find((obj)=>obj.name === name);
+            let index = listOfHeroes.indexOf(obj);
+            listOfHeroes.splice(index,1);
             obj.CastSpell(spell,mp);
+            listOfHeroes.push(obj)
         }
 
         command = input.shift(); 
