@@ -4,10 +4,18 @@ function solve(input){
     let liftArray = currLift.split(" ").map(Number);
 
 
-    function findFreeSpace(array){
-        let istrue = array.find((a)=> a < 4 );
-        return istrue;
+    function lisftCheck(array){
+        let filterArray = array.filter((a)=> a < 4);
+
+        if(filterArray.length > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
+
+
+    
     
     for(let i = 0; i < liftArray.length;i++){
         let wagon = liftArray[i];
@@ -18,18 +26,19 @@ function solve(input){
             liftArray[i] = wagon;
             people--;
 
-            if(people <= 0){ 
-                   isPeople = false;
-                   break; 
-            }
-            if(i === liftArray.length - 1 && people > 0){
-                console.log(liftArray.split(" "));
-            }else if(liftArray[i] ===  4 && people > 0){
-                console.log(`There isn't enough space! ${people} people in a queue!`);
-                
-            }else if(findFreeSpace(liftArray) === true){
+
+            if(people <= 0 && lisftCheck(liftArray)){
                 console.log(`The lift has empty spots!`);
+                console.log(liftArray.join(" "));
+                isPeople = false;
+                break;
+            }else if(people > 0 && !lisftCheck(liftArray)){
+                console.log(`There isn't enough space! ${people} people in a queue!`);
+                console.log(liftArray.join(" "));
                 
+            }else if(!lisftCheck(liftArray) && people <= 0){
+                isPeople = false;
+                console.log(liftArray.split(" "));
             }
         }
         if(!isPeople){
