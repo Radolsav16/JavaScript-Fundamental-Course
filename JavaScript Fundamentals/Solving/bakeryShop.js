@@ -45,6 +45,9 @@ function bakeryShop(input) {
     console.log(`${foods}: ${shop[foods]}`);
   }
   console.log(`All sold: ${soleFoodQuantitu} goods`);
+
+  console.log("Erorr1");
+  
 }
 bakeryShop([
   "Receive 105 cookies",
